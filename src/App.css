@@ -1,38 +1,329 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bebas+Neue&family=Press+Start+2P&family=Shrikhand&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&display=swap");
+
+/* GLOBAL */
+:root {
+  --honeydew: #f1faee;
+  --imperial-red: #e63946;
+  --celadon-blue: #457b9d;
+  --powder-blue: #a8dadc;
+  --charcoal: #404e5c;
+  --prussian-blue: #1d3557;
+  --outrageous-orange: #fc7a57;
+  --lcd-display: rgba(125, 140, 115, 1);
+  --gradient: linear-gradient(90deg, #d9afd9 0%, #97d9e1 100%);
+  --gradient: radial-gradient(circle, rgba(92, 64, 64, 1) 0%, rgba(50, 57, 56, 1) 43%, rgba(50, 52, 57, 1) 100%);
+  --padding: 20px;
+  --header-height: 10vh;
+  --container-height: 90vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body {
+  font-family: sans-serif;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  height: 100vh;
+  background: var(--gradient);
+}
+
+#drum-machine {
+  padding: 50px;
+  background: #333239;
+  width: 350px;
+  border-radius: 25px 25px 25px 25px;
+  box-shadow: inset -3px 3px 3px rgba(255, 255, 255, 0.2), inset 3px -3px 3px rgba(0, 0, 0, 0.8),
+    4px 4px 15px rgba(0, 0, 0, 0.2), -4px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+#title {
+  margin-bottom: var(--padding);
+  font-family: "Audiowide";
+  text-transform: uppercase;
+  background: linear-gradient(
+    to right,
+    #d16ba5,
+    #c777b9,
+    #ba83ca,
+    #aa8fd8,
+    #9a9ae1,
+    #8aa7ec,
+    #79b3f4,
+    #69bff8,
+    #52cffe,
+    #41dfff,
+    #46eefa,
+    #5ffbf1
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#display {
+  background: var(--lcd-display);
+  border-radius: 6px;
+  box-shadow: inset -1px 15px rgba(255, 255, 255, 0.2), 1px 5px rgba(0, 0, 0, 0.2);
+  padding: var(--padding);
+  font-family: "Press Start 2P", monospace;
+  margin-bottom: var(--padding);
+  color: rgba(0, 0, 0, 0.6);
+}
+
+#keypad {
+  height: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  align-content: stretch;
+  justify-content: center;
+}
+
+.btn {
+  height: 78px;
+  width: 78px;
+  border-radius: 15%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  background-color: var(--celadon-blue);
+  box-shadow: inset -1px 15px rgba(255, 255, 255, 0.1), 1px 5px rgba(0, 0, 0, 0.1);
+  color: var(--honeydew);
+  font-size: 1.5em;
+  font-family: sans-serif;
+  font-family: "Audiowide", monospace;
+  cursor: pointer;
+  outline: none;
+  margin: 15px;
+}
+
+.mode-btn {
+  height: unset;
+  width: unset;
+  padding: 5px;
+  border-radius: 5%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  background-color: var(--imperial-red);
+  box-shadow: inset -1px 15px rgba(255, 255, 255, 0.2), 1px 5px rgba(0, 0, 0, 1);
+  color: var(--honeydew);
+  font-size: 1em;
+  font-family: sans-serif;
+  font-family: "Audiowide", monospace;
+  cursor: pointer;
+  outline: none;
+  margin: 15px;
+}
+
+/* Volume Slider */
+.volume-container {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.volume-label-left {
+  color: var(--honeydew);
+  margin-right: 15px;
+}
+
+.volume-label-right {
+  color: var(--honeydew);
+  margin-left: 15px;
+}
+
+/* SLIDER COMPONENT */
+/* Credit to https://codepen.io/egrucza/pen/LEoOQZ */
+.range {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  background: rgba(59, 173, 227, 1);
+  background: -moz-linear-gradient(
+    45deg,
+    rgba(59, 173, 227, 1) 0%,
+    rgba(87, 111, 230, 1) 25%,
+    rgba(152, 68, 183, 1) 51%,
+    rgba(255, 53, 127, 1) 100%
+  );
+  background: -webkit-gradient(
+    left bottom,
+    right top,
+    color-stop(0%, rgba(59, 173, 227, 1)),
+    color-stop(25%, rgba(87, 111, 230, 1)),
+    color-stop(51%, rgba(152, 68, 183, 1)),
+    color-stop(100%, rgba(255, 53, 127, 1))
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    rgba(59, 173, 227, 1) 0%,
+    rgba(87, 111, 230, 1) 25%,
+    rgba(152, 68, 183, 1) 51%,
+    rgba(255, 53, 127, 1) 100%
+  );
+  background: -o-linear-gradient(
+    45deg,
+    rgba(59, 173, 227, 1) 0%,
+    rgba(87, 111, 230, 1) 25%,
+    rgba(152, 68, 183, 1) 51%,
+    rgba(255, 53, 127, 1) 100%
+  );
+  background: -ms-linear-gradient(
+    45deg,
+    rgba(59, 173, 227, 1) 0%,
+    rgba(87, 111, 230, 1) 25%,
+    rgba(152, 68, 183, 1) 51%,
+    rgba(255, 53, 127, 1) 100%
+  );
+  background: linear-gradient(
+    45deg,
+    rgba(59, 173, 227, 1) 0%,
+    rgba(87, 111, 230, 1) 25%,
+    rgba(152, 68, 183, 1) 51%,
+    rgba(255, 53, 127, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1 );
+  height: 2px;
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+input[type="range"]::-moz-range-track {
+  -moz-appearance: none;
+  background: rgba(59, 173, 227, 1);
+  background: -moz-linear-gradient(
+    45deg,
+    rgba(59, 173, 227, 1) 0%,
+    rgba(87, 111, 230, 1) 25%,
+    rgba(152, 68, 183, 1) 51%,
+    rgba(255, 53, 127, 1) 100%
+  );
+  background: -webkit-gradient(
+    left bottom,
+    right top,
+    color-stop(0%, rgba(59, 173, 227, 1)),
+    color-stop(25%, rgba(87, 111, 230, 1)),
+    color-stop(51%, rgba(152, 68, 183, 1)),
+    color-stop(100%, rgba(255, 53, 127, 1))
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    rgba(59, 173, 227, 1) 0%,
+    rgba(87, 111, 230, 1) 25%,
+    rgba(152, 68, 183, 1) 51%,
+    rgba(255, 53, 127, 1) 100%
+  );
+  background: -o-linear-gradient(
+    45deg,
+    rgba(59, 173, 227, 1) 0%,
+    rgba(87, 111, 230, 1) 25%,
+    rgba(152, 68, 183, 1) 51%,
+    rgba(255, 53, 127, 1) 100%
+  );
+  background: -ms-linear-gradient(
+    45deg,
+    rgba(59, 173, 227, 1) 0%,
+    rgba(87, 111, 230, 1) 25%,
+    rgba(152, 68, 183, 1) 51%,
+    rgba(255, 53, 127, 1) 100%
+  );
+  background: linear-gradient(
+    45deg,
+    rgba(59, 173, 227, 1) 0%,
+    rgba(87, 111, 230, 1) 25%,
+    rgba(152, 68, 183, 1) 51%,
+    rgba(255, 53, 127, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1 );
+  height: 2px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 2px solid;
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+  max-width: 80px;
+  position: relative;
+  bottom: 11px;
+  background-color: var(--celadon-blue);
+  cursor: -webkit-grab;
+
+  -webkit-transition: border 1000ms ease;
+  transition: border 1000ms ease;
+}
+
+input[type="range"]::-moz-range-thumb {
+  -moz-appearance: none;
+  border: 2px solid;
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+  max-width: 80px;
+  position: relative;
+  bottom: 11px;
+  background-color: var(--celadon-blue);
+  cursor: -moz-grab;
+  -moz-transition: border 1000ms ease;
+  transition: border 1000ms ease;
+}
+
+.range.blue::-webkit-slider-thumb {
+  border-color: rgb(59, 173, 227);
+}
+
+.range.ltpurple::-webkit-slider-thumb {
+  border-color: rgb(87, 111, 230);
+}
+
+.range.purple::-webkit-slider-thumb {
+  border-color: rgb(152, 68, 183);
+}
+
+.range.pink::-webkit-slider-thumb {
+  border-color: rgb(255, 53, 127);
+}
+
+.range.blue::-moz-range-thumb {
+  border-color: rgb(59, 173, 227);
+}
+
+.range.ltpurple::-moz-range-thumb {
+  border-color: rgb(87, 111, 230);
+}
+
+.range.purple::-moz-range-thumb {
+  border-color: rgb(152, 68, 183);
+}
+
+.range.pink::-moz-range-thumb {
+  border-color: rgb(255, 53, 127);
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+  cursor: -webkit-grabbing;
+}
+
+input[type="range"]::-moz-range-thumb:active {
+  cursor: -moz-grabbing;
+}
+
+.button-label {
   color: white;
+  font-family: "Audiowide";
+  margin-left: 15px;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#mode-button-container {
+  display: flex;
+  align-items: center;
 }
