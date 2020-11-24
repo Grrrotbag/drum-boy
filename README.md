@@ -1,5 +1,7 @@
 # Drum Boy
 
+![example image](https://imgur.com/CuoOrra.png)
+
 Drum boy was created as part of the FreeCodeCamp challenges.
 
 It is a React app which plays either "retro" sounds or "synth" sounds depending on which setting is selected.
